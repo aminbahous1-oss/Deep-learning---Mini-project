@@ -1,7 +1,0 @@
-10. Evaluation of LLM/RAG Systems
-- BLEU / ROUGE: N-gram overlap metrics for generation quality.
-- BERTScore: Semantic similarity using BERT embeddings.
-- Faithfulness: Does the answer reflect the retrieved context?
-- Answer Relevance: Is the answer relevant to the question?
-- Context Recall: Did retrieval find all necessary information?
-- Ragas: Framework specifically for evaluating RAG pipelines
