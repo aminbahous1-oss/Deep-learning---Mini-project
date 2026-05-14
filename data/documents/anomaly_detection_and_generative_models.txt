@@ -1,0 +1,123 @@
+Anomaly Detection and Generative Models in Deep Learning
+=========================================================
+
+1. Anomaly Detection Overview
+Anomaly detection (also called outlier detection or novelty detection) identifies data points that deviate significantly from expected patterns. Applications include:
+- Manufacturing: Detecting defective products on production lines.
+- Cybersecurity: Identifying intrusions or unusual network traffic.
+- Healthcare: Detecting unusual medical images (tumors, lesions).
+- Finance: Fraud detection in transactions.
+- Industrial IoT: Predictive maintenance from sensor data.
+
+Challenges:
+- Rare anomalies mean highly imbalanced datasets.
+- Anomalies are often undefined or unknown in advance.
+- Most approaches use unsupervised or one-class learning.
+
+2. Autoencoder-Based Anomaly Detection
+Autoencoders are neural networks trained to reconstruct their input through a compressed bottleneck:
+- Encoder: Compresses input to a low-dimensional latent representation.
+- Bottleneck: Compact representation capturing essential features.
+- Decoder: Reconstructs the original input from the latent representation.
+
+For anomaly detection:
+1. Train the autoencoder on normal data only.
+2. The model learns to reconstruct normal patterns well.
+3. At inference, compute reconstruction error.
+4. High reconstruction error → likely anomaly.
+
+Variants:
+- Sparse Autoencoder: Constrains the latent representation to be sparse.
+- Denoising Autoencoder: Trained to reconstruct clean input from noisy input.
+- Variational Autoencoder (VAE): Learns a probabilistic latent space. Better for generation.
+- Convolutional Autoencoder: Uses conv layers for image data.
+
+3. Variational Autoencoders (VAEs)
+VAEs add a probabilistic twist to autoencoders:
+- The encoder outputs a distribution (mean μ and variance σ²) rather than a point.
+- Sampling: z = μ + σ × ε, where ε ~ N(0,1) (reparameterization trick).
+- Loss = Reconstruction loss + KL divergence (regularizes latent space to be Gaussian).
+
+Benefits:
+- Can generate new samples by sampling from the latent space.
+- Smooth latent space allows interpolation between examples.
+- Can be used for anomaly detection (low likelihood = anomaly).
+
+4. Generative Adversarial Networks (GANs)
+GANs (Goodfellow et al., 2014) consist of two competing networks:
+- Generator (G): Generates fake samples from random noise.
+- Discriminator (D): Classifies samples as real or fake.
+
+Training: G tries to fool D; D tries to correctly classify. Min-max game:
+min_G max_D V(D,G) = E[log D(x)] + E[log(1 - D(G(z)))]
+
+GAN variants:
+- DCGAN: Deep Convolutional GAN for high-quality images.
+- Conditional GAN (cGAN): Generator conditioned on class labels.
+- Pix2Pix: Image-to-image translation.
+- CycleGAN: Unpaired image-to-image translation (e.g., horse to zebra).
+- StyleGAN / StyleGAN2: High-resolution, photorealistic face generation.
+- BigGAN: Large-scale class-conditional image synthesis.
+
+GAN challenges:
+- Mode collapse: Generator produces limited variety.
+- Training instability: Difficult to balance G and D.
+- Evaluation: FID (Fréchet Inception Distance) measures image quality and diversity.
+
+5. Diffusion Models
+Diffusion models (Ho et al., 2020) are the current state-of-the-art in image generation:
+- Forward process: Gradually add Gaussian noise to data over T timesteps.
+- Reverse process: Train a neural network to predict and remove noise.
+- At inference: Start from pure noise, iteratively denoise to generate a sample.
+
+Notable models:
+- DDPM (Denoising Diffusion Probabilistic Models): Original formulation.
+- DDIM: Faster sampling, deterministic.
+- Stable Diffusion: Latent diffusion in compressed space. Open-source.
+- DALL-E 2/3 (OpenAI): Text-to-image generation.
+- Imagen (Google): High-fidelity text-to-image.
+- Midjourney: Commercial text-to-image tool.
+
+Advantages over GANs:
+- More stable training (no adversarial objective).
+- Better mode coverage (no mode collapse).
+- Competitive or superior image quality.
+
+6. One-Class Classification
+One-class classification trains only on normal data:
+- One-Class SVM: Finds a hypersphere around normal data.
+- Deep SVDD (Deep Support Vector Data Description): Neural network version.
+- PatchCore: Memory-bank of normal feature patches. State-of-the-art for industrial anomaly detection.
+- PADIM: Per-region modeling using pre-trained features.
+- FastFlow: Normalizing flow-based anomaly detection.
+
+7. Anomaly Detection Datasets
+- MVTec AD: Industrial anomaly detection benchmark. 15 categories, 73 defect types.
+- MNIST/CIFAR with one-class setup: Treat one class as normal, others as anomalies.
+- KDD Cup 1999: Network intrusion detection.
+- UCSD Pedestrian Dataset: Video anomaly detection.
+- ShanghaiTech Campus: Complex scene video anomaly detection.
+
+8. Normalizing Flows
+Normalizing flows learn an invertible mapping between data and a simple distribution:
+- Can compute exact likelihoods (unlike VAEs or GANs).
+- Used for density estimation, anomaly detection, generative modeling.
+- Examples: RealNVP, Glow, Flow++.
+
+For anomaly detection: samples with low probability under the learned distribution are anomalies.
+
+9. Metrics for Anomaly Detection
+- AUROC (Area Under ROC Curve): Measures discrimination between normal and anomalous.
+- AUPRC (Area Under Precision-Recall Curve): Better for imbalanced datasets.
+- F1-Score: Balance between precision and recall at a threshold.
+- Per-pixel AUROC: For localization of anomalies in images.
+- PRO (Per-Region Overlap): Measures segmentation quality relative to defect size.
+
+10. Synthesized Data for Training
+When real anomaly data is scarce, synthesized anomalies can augment training:
+- CutPaste: Cuts a patch from the image and pastes it elsewhere.
+- Perlin noise textures: Simulate defect patterns.
+- Geometric deformations: Simulate structural anomalies.
+- DrAEM (Discriminatively trained Reconstruction-based Anomaly Detection): Uses synthetic anomalies.
+
+Domain randomization: Vary textures, lighting, and background to improve generalization from synthetic to real data.

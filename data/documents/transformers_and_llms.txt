@@ -1,0 +1,112 @@
+Transformers and Large Language Models (LLMs)
+=============================================
+
+1. The Transformer Architecture
+The Transformer, introduced in "Attention Is All You Need" (Vaswani et al., 2017), revolutionized natural language processing and later computer vision and other domains. Unlike RNNs which process sequences sequentially, Transformers process all tokens in parallel using self-attention mechanisms.
+
+Key components:
+- Self-Attention: Each token attends to all other tokens, capturing long-range dependencies.
+- Multi-Head Attention: Multiple attention heads learn different types of relationships simultaneously.
+- Positional Encoding: Adds position information since Transformers lack inherent sequence order.
+- Feed-Forward Networks: Applied independently to each position after attention.
+- Layer Normalization: Stabilizes training.
+- Residual Connections: Allow gradients to flow directly through the network.
+
+2. Self-Attention Mechanism
+Self-attention computes relationships between all pairs of tokens in a sequence:
+1. Each token is projected into three vectors: Query (Q), Key (K), and Value (V).
+2. Attention scores are computed as: Attention(Q,K,V) = softmax(QK^T / sqrt(d_k)) * V
+3. The scaling factor sqrt(d_k) prevents dot products from becoming too large.
+4. The output is a weighted sum of Values, where weights come from the attention scores.
+
+Multi-head attention runs h attention operations in parallel, concatenates outputs, and projects them.
+
+3. BERT (Bidirectional Encoder Representations from Transformers)
+BERT (Devlin et al., 2018) is an encoder-only Transformer pre-trained on:
+- Masked Language Modeling (MLM): Predict randomly masked tokens.
+- Next Sentence Prediction (NSP): Predict if two sentences are consecutive.
+
+BERT creates contextualized embeddings where the same word gets different representations based on context. It excels at understanding tasks: classification, NER, question answering.
+
+Variants:
+- RoBERTa: Improved pre-training with more data and no NSP.
+- DistilBERT: Smaller, faster distilled version.
+- ALBERT: Parameter-efficient BERT variant.
+
+4. GPT (Generative Pre-trained Transformer)
+GPT models (OpenAI) are decoder-only Transformers trained on causal language modeling (predict next token). Key versions:
+- GPT-1 (2018): 117M parameters, demonstrated transfer learning for NLP.
+- GPT-2 (2019): 1.5B parameters, surprisingly good zero-shot text generation.
+- GPT-3 (2020): 175B parameters, impressive few-shot learning across many tasks.
+- GPT-4 (2023): Multimodal, best performance on reasoning and instruction following.
+
+GPT models excel at text generation, completion, summarization, and following instructions.
+
+5. Large Language Models (LLMs)
+LLMs are Transformer-based models trained on massive text corpora. Key properties:
+- Scale: Billions to trillions of parameters.
+- Emergent abilities: Capabilities that appear only at large scale (e.g., in-context learning, chain-of-thought).
+- Few-shot learning: Can perform new tasks with just a few examples in the prompt.
+- Instruction following: Fine-tuned to follow natural language instructions (RLHF).
+
+Notable LLMs:
+- GPT-4 (OpenAI): State-of-the-art proprietary model.
+- Claude (Anthropic): Focused on safety and helpfulness.
+- LLaMA/LLaMA 2/LLaMA 3 (Meta): Open-weight models enabling local deployment.
+- Mistral / Mixtral (Mistral AI): Efficient open models with strong performance.
+- Gemini (Google): Multimodal LLM family.
+
+6. Retrieval-Augmented Generation (RAG)
+RAG (Lewis et al., 2020) enhances LLMs by combining them with a retrieval system:
+1. Indexing: Documents are chunked, embedded, and stored in a vector database.
+2. Retrieval: Given a user query, similar document chunks are retrieved using semantic search.
+3. Augmentation: Retrieved chunks are added to the LLM's context (prompt).
+4. Generation: The LLM generates an answer grounded in the retrieved documents.
+
+Benefits of RAG:
+- Reduces hallucinations by grounding answers in facts.
+- Allows LLMs to access up-to-date or domain-specific knowledge without retraining.
+- Provides citations and source traceability.
+- Cost-effective alternative to full fine-tuning.
+
+RAG components:
+- Document Loader: Reads PDFs, text files, web pages, etc.
+- Text Splitter: Divides documents into manageable chunks.
+- Embedding Model: Converts text chunks into dense vectors.
+- Vector Store: Stores and indexes embeddings (e.g., ChromaDB, FAISS, Pinecone).
+- Retriever: Finds the most relevant chunks for a query.
+- LLM: Generates the final answer given context + query.
+
+7. Fine-Tuning LLMs
+Approaches to adapt LLMs to specific domains or tasks:
+- Full fine-tuning: Update all model weights. Expensive, requires large GPU memory.
+- LoRA (Low-Rank Adaptation): Injects small trainable matrices into each layer. Very parameter-efficient.
+- QLoRA: LoRA with 4-bit quantization. Enables fine-tuning on consumer GPUs.
+- Instruction tuning: Fine-tune on instruction-response pairs to improve task following.
+- RLHF (Reinforcement Learning from Human Feedback): Align model outputs with human preferences.
+
+8. Prompt Engineering
+Techniques to guide LLM behavior through prompts:
+- Zero-shot: Direct instruction without examples.
+- Few-shot: Provide 2-5 examples in the prompt.
+- Chain-of-Thought (CoT): Prompt the model to reason step-by-step.
+- System prompts: Define the model's role, constraints, and personality.
+- Retrieval-Augmented Prompts: Include relevant retrieved context.
+
+9. Vector Databases
+Vector databases store high-dimensional embeddings and enable efficient similarity search:
+- ChromaDB: Open-source, easy to use, runs locally.
+- FAISS (Facebook AI Similarity Search): Fast library, not a full database.
+- Pinecone: Managed cloud vector database.
+- Weaviate: Open-source with built-in ML features.
+- Qdrant: Open-source, production-ready.
+
+Similarity metrics: Cosine similarity, Euclidean distance, dot product.
+
+10. Evaluation of LLM/RAG Systems
+- BLEU / ROUGE: N-gram overlap metrics for generation quality.
+- BERTScore: Semantic similarity using BERT embeddings.
+- Faithfulness: Does the answer reflect the retrieved context?
+- Answer Relevance: Is the answer relevant to the question?
+- Context Recall: Did retrieval find all necessary information?
+- Ragas: Framework specifically for evaluating RAG pipelines.

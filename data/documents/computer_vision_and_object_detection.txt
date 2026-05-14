@@ -1,0 +1,122 @@
+Computer Vision and Object Detection
+=====================================
+
+1. Convolutional Neural Networks (CNNs)
+CNNs are the backbone of computer vision. Key operations:
+- Convolution: Applies learned filters to detect local patterns (edges, textures, shapes).
+- Pooling (Max/Average): Reduces spatial dimensions, creates translation invariance.
+- Fully Connected Layers: Perform final classification or regression.
+
+Key CNN components:
+- Filter/Kernel: Small matrix of learnable weights applied across the input.
+- Feature Map: Output of a convolution operation showing where a feature was detected.
+- Receptive Field: The portion of the input that influences a particular neuron.
+- Stride: Step size when sliding the filter.
+- Padding: Adds zeros around input to control output dimensions.
+
+2. Classical CNN Architectures
+- LeNet-5 (1998): Pioneer CNN for digit recognition. 5 layers.
+- AlexNet (2012): 8 layers, won ImageNet challenge. Introduced ReLU, dropout, GPU training.
+- VGGNet (2014): 16-19 layers, systematic 3x3 convolutions. Simple but deep.
+- GoogLeNet/Inception (2014): Inception modules with parallel convolutions. 22 layers, efficient.
+- ResNet (2015): Residual connections solve vanishing gradients. Up to 152 layers. He et al.
+- DenseNet (2017): Each layer connects to all subsequent layers. Maximum feature reuse.
+- MobileNet (2017): Depthwise separable convolutions. Designed for mobile/edge devices.
+- EfficientNet (2019): Compound scaling of depth, width, resolution. Highly efficient.
+
+3. Object Detection
+Object detection identifies and localizes multiple objects in an image, providing:
+- Bounding boxes: (x, y, width, height) coordinates.
+- Class labels: What the object is.
+- Confidence scores: How certain the model is.
+
+Two-stage detectors:
+- R-CNN (2013): Region proposals + CNN features. Slow.
+- Fast R-CNN (2015): Feature sharing, much faster. Single forward pass.
+- Faster R-CNN (2015): Region Proposal Network (RPN) inside the network. Near real-time.
+- Mask R-CNN (2017): Adds segmentation mask prediction. Instance segmentation.
+
+One-stage detectors:
+- YOLO (You Only Look Once, 2015): Single pass, real-time detection. Divides image into grid.
+- YOLOv3 (2018): Multi-scale predictions, darknet-53 backbone.
+- YOLOv5 (2020): PyTorch implementation, easy to use, fast.
+- YOLOv8 (2023): State-of-the-art accuracy/speed tradeoff. Unified model for detection, segmentation, classification.
+- SSD (Single Shot Detector, 2016): Multiple default boxes per location.
+- RetinaNet (2017): Focal loss addresses class imbalance. Strong baseline.
+
+4. YOLO in Detail
+YOLO (You Only Look Once) works by:
+1. Dividing the input image into an S×S grid.
+2. Each grid cell predicts B bounding boxes and their confidence scores.
+3. Each cell also predicts C class probabilities.
+4. Output tensor: S × S × (B × 5 + C).
+5. Non-Maximum Suppression (NMS) removes duplicate detections.
+
+YOLO is popular because:
+- Single forward pass means very fast inference (real-time capable).
+- Sees the whole image during training (fewer background false positives).
+- Generalizes well to new domains.
+
+5. Instance Segmentation
+Instance segmentation goes beyond bounding boxes to predict pixel-level masks for each object instance:
+- Mask R-CNN: Adds a mask prediction branch to Faster R-CNN.
+- YOLACT: Real-time instance segmentation.
+- SOLOv2: Segment Objects by Locations.
+- SAM (Segment Anything Model, Meta 2023): Foundation model for segmentation, zero-shot capable.
+
+Difference from semantic segmentation:
+- Semantic segmentation: Assigns a class to every pixel, no instance distinction.
+- Instance segmentation: Separates individual object instances.
+- Panoptic segmentation: Combines both.
+
+6. Image Classification Datasets
+- ImageNet (ILSVRC): 1.2M images, 1000 classes. Standard benchmark.
+- CIFAR-10/100: 60K small images (32x32). 10/100 classes. Common for quick experiments.
+- COCO (Common Objects in Context): 330K images, 80 object categories. Detection + segmentation.
+- Pascal VOC: 20 object classes. Detection and segmentation.
+- Open Images (Google): 9M images with labels.
+
+7. Evaluation Metrics for Object Detection
+- Intersection over Union (IoU): Overlap between predicted and ground truth boxes.
+  IoU = Area of Intersection / Area of Union
+- True Positive (TP): Detection with IoU > threshold (e.g., 0.5).
+- Precision: TP / (TP + FP). How many detections are correct.
+- Recall: TP / (TP + FN). How many ground truths are detected.
+- Average Precision (AP): Area under the Precision-Recall curve.
+- mAP (mean Average Precision): Average AP across all classes. Primary COCO metric.
+- mAP@50: mAP at IoU threshold 0.5.
+- mAP@50:95: Average mAP over IoU thresholds from 0.5 to 0.95.
+
+8. Data Augmentation for Object Detection
+Common augmentations:
+- Random flip (horizontal/vertical)
+- Random crop and zoom
+- Color jittering (brightness, contrast, saturation, hue)
+- Mosaic augmentation (YOLOv4): Combines 4 images into one.
+- MixUp: Blends two images and their labels.
+- CutMix: Replaces part of image with patch from another.
+- Random rotation and scaling
+- Gaussian noise and blur
+
+9. Pose Estimation
+Pose estimation detects keypoints (joints) on human or animal bodies:
+- OpenPose: Multi-person 2D pose estimation.
+- HRNet (High-Resolution Network): Maintains high-resolution representations.
+- MediaPipe (Google): Real-time, on-device pose estimation.
+- ViTPose: Vision Transformer-based pose estimation.
+
+Applications: Sports analysis, rehabilitation, AR/VR, sign language recognition, animation.
+
+10. Object Tracking
+Object tracking follows objects across video frames:
+- Single Object Tracking (SOT): Tracks one target given initial bounding box.
+- Multi-Object Tracking (MOT): Simultaneously tracks multiple objects.
+
+Approaches:
+- SORT (Simple Online and Realtime Tracking): Kalman filter + Hungarian algorithm.
+- DeepSORT: Adds appearance features (Re-ID) to SORT.
+- ByteTrack: Associates every detection, including low-confidence ones.
+- OC-SORT: Observation-centric SORT, more robust to occlusion.
+- StrongSORT: Enhanced DeepSORT with additional improvements.
+
+Tracking-by-Detection paradigm: Run detector each frame, associate detections across frames.

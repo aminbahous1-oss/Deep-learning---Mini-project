@@ -1,0 +1,76 @@
+Deep Learning Fundamentals
+==========================
+
+1. What is Deep Learning?
+Deep learning is a subfield of machine learning that uses artificial neural networks with many layers (hence "deep") to learn representations of data. Unlike traditional machine learning algorithms that require manual feature engineering, deep learning models automatically learn hierarchical features directly from raw data such as images, audio, or text.
+
+Deep learning has revolutionized fields like computer vision, natural language processing, and speech recognition. The key insight is that by stacking multiple layers of non-linear transformations, a network can learn increasingly abstract representations of input data.
+
+2. Artificial Neural Networks (ANNs)
+An artificial neural network is composed of:
+- Input Layer: Receives raw data (e.g., pixel values, word embeddings)
+- Hidden Layers: Intermediate layers that learn abstract features
+- Output Layer: Produces the final prediction (e.g., class probabilities)
+
+Each neuron computes a weighted sum of its inputs, adds a bias, and passes the result through a non-linear activation function. The weights and biases are the learnable parameters of the network.
+
+3. Activation Functions
+Activation functions introduce non-linearity into neural networks, allowing them to learn complex patterns:
+
+- ReLU (Rectified Linear Unit): f(x) = max(0, x). Most widely used. Avoids the vanishing gradient problem.
+- Sigmoid: f(x) = 1 / (1 + e^(-x)). Output between 0 and 1. Used in binary classification output layers.
+- Tanh: f(x) = (e^x - e^(-x)) / (e^x + e^(-x)). Output between -1 and 1. Zero-centered.
+- Softmax: Converts a vector of numbers into a probability distribution. Used in multi-class output layers.
+- Leaky ReLU: f(x) = x if x > 0, else 0.01x. Addresses dying ReLU problem.
+
+4. Backpropagation and Gradient Descent
+Training a neural network involves:
+1. Forward pass: Compute predictions by passing input through the network.
+2. Loss computation: Measure the error between predictions and true labels using a loss function (e.g., cross-entropy, MSE).
+3. Backward pass (backpropagation): Compute gradients of the loss with respect to each parameter using the chain rule.
+4. Parameter update: Adjust parameters in the direction that reduces the loss.
+
+Gradient descent variants:
+- Stochastic Gradient Descent (SGD): Updates parameters using one sample at a time.
+- Mini-batch Gradient Descent: Updates using small batches (e.g., 32 or 64 samples). Most common.
+- Adam: Adaptive learning rate optimizer that combines momentum and RMSProp. Most widely used.
+
+5. Regularization Techniques
+To prevent overfitting:
+- Dropout: Randomly sets a fraction of neurons to zero during training. Equivalent to training an ensemble of networks.
+- L1/L2 Regularization: Adds a penalty term to the loss function based on the magnitude of weights.
+- Batch Normalization: Normalizes the inputs of each layer, stabilizing training and allowing higher learning rates.
+- Data Augmentation: Artificially increases training data size by applying random transformations (rotation, flipping, cropping).
+- Early Stopping: Stops training when validation performance stops improving.
+
+6. Loss Functions
+- Mean Squared Error (MSE): Used for regression tasks. Measures average squared difference.
+- Binary Cross-Entropy: Used for binary classification.
+- Categorical Cross-Entropy: Used for multi-class classification.
+- Contrastive Loss: Used in metric learning to bring similar samples closer and push dissimilar ones apart.
+
+7. Deep Learning Frameworks
+- PyTorch: Dynamic computation graph, popular in research. Developed by Meta.
+- TensorFlow/Keras: Static/dynamic computation graph, popular in production. Developed by Google.
+- JAX: High-performance numerical computing with automatic differentiation. Used in advanced research.
+
+8. Transfer Learning
+Transfer learning involves using a pre-trained model (trained on a large dataset) as a starting point for a new task. This dramatically reduces training time and data requirements. Common approaches:
+- Feature Extraction: Freeze pre-trained layers, train only the new head.
+- Fine-tuning: Unfreeze some or all pre-trained layers and continue training with a small learning rate.
+- Full fine-tuning: Retrain the entire model on the new dataset.
+
+9. Hyperparameter Tuning
+Key hyperparameters include:
+- Learning rate: Controls the size of parameter updates.
+- Batch size: Number of samples processed before updating parameters.
+- Number of layers and neurons: Determines model capacity.
+- Dropout rate: Fraction of neurons dropped during training.
+- Weight initialization: Starting values for parameters (e.g., Xavier, He initialization).
+
+10. Common Challenges in Deep Learning
+- Vanishing gradients: Gradients become very small in deep networks, slowing learning in early layers.
+- Exploding gradients: Gradients become very large, causing instability. Addressed with gradient clipping.
+- Overfitting: Model memorizes training data and fails to generalize.
+- Class imbalance: Training data has unequal class distribution. Addressed with weighted loss or oversampling.
+- Computational cost: Training large models requires significant GPU resources.
