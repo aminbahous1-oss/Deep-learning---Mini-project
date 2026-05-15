@@ -9,7 +9,7 @@ Large Language Models (LLMs) such as GPT-4 or LLaMA are trained on vast corpora 
 1. **Outdated knowledge** — their training data has a cutoff date
 2. **Hallucinations** — they can confidently produce plausible-sounding but incorrect information
 
-**Our solution:** A Retrieval-Augmented Generation (RAG) system that grounds the LLM's answers in a curated domain-specific knowledge base. We build a Deep Learning Q&A assistant that answers questions about neural network architectures, object detection, Transformers, anomaly detection, and more — using only verified document sources.
+**Solution:** A Retrieval-Augmented Generation (RAG) system that grounds the LLM's answers in a curated domain-specific knowledge base. We build a Deep Learning Q&A assistant that answers questions about neural network architectures, object detection, Transformers, anomaly detection, and more — using only verified document sources.
 
 ---
 
