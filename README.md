@@ -77,7 +77,8 @@ Three domain documents covering:
 | `computer_vision_and_object_detection.txt` | CNNs, YOLO, Faster R-CNN, segmentation, tracking, pose |
 | `anomaly_detection_and_generative_models.txt` | Autoencoders, VAE, GAN, diffusion models, anomaly datasets |
 
-You can add your own PDFs or text files to `data/documents/` and re-run `ingest.py`.
+Slides from the deep learning lecture were added also.
+Any own PDFs can be added or text files to `data/documents/` and re-run `ingest.py`.
 
 ---
 
